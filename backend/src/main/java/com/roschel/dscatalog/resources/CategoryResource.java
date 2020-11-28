@@ -1,6 +1,7 @@
 package com.roschel.dscatalog.resources;
 
 import com.roschel.dscatalog.dto.CategoryDTO;
+import com.roschel.dscatalog.entities.Category;
 import com.roschel.dscatalog.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,4 +39,11 @@ public class CategoryResource {
 				.toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
+
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @RequestBody CategoryDTO dto){
+		dto = service.update(id, dto);
+		return ResponseEntity.ok().body(dto);
+	}
+
 }
