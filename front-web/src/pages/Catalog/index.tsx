@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ProductsResponse } from '../../core/types/Product';
 import { makeRequest } from '../../core/utils/request';
 import ProductCard from './components/ProductCard';
-import ProductCardLoader from './components/ProductCardLoader';
+import ProductCardLoader from './components/Loaders/ProductCardLoader';
 import './styles.scss'
 
 const Catalog = () => {
@@ -29,7 +29,7 @@ const Catalog = () => {
         }
 
         //iniciar o loader antes de fazer a requisição
-        setIsLoading(true)
+        setIsLoading(true);
         makeRequest({ url: '/products', params })
             .then(response => setProductResponse(response.data))
             .finally(() => {

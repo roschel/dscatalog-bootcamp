@@ -1,12 +1,13 @@
 import React from "react"
 import ContentLoader from "react-content-loader"
+import { generateList } from "../../../../core/utils/list"
 
 const ProductCardLoader = () => {
-    const loaderItem = [0, 1, 2];
+    const loaderItems = generateList(3);
     return (
         <>
 
-            {loaderItem.map(item => (
+            {loaderItems.map(item => (
                 <ContentLoader
                     key={item}
                     speed={1}
