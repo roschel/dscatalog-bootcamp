@@ -5,6 +5,7 @@ import { makeRequest } from 'core/utils/request';
 import ProductCard from './components/ProductCard';
 import ProductCardLoader from './components/Loaders/ProductCardLoader';
 import './styles.scss'
+import Pagination from 'core/components/Pagination';
 
 const Catalog = () => {
     //quando a lista de produtos estiver disponível,
@@ -52,6 +53,7 @@ const Catalog = () => {
                 )}
 
             </div>
+            <Pagination />
         </div>
     )
 };
