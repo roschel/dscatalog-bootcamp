@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import List from './List';
 import './styles.scss'
 
 const Products = () => {
@@ -7,7 +8,7 @@ const Products = () => {
         <div>
             <Switch>
                 <Route path="/admin/products" exact>
-                    <h1>Exibir listagem de produtos</h1>
+                    <List />
                 </Route>
                 <Route path="/admin/products/create">
                     <h1>Criar novo produto</h1>
