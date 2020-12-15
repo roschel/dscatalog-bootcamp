@@ -9,7 +9,7 @@ const Navbar = () => (
                 <h4>DS Catalog</h4>
             </Link>
         </div>
-        <div className="col-6 offset-3" >
+        <div className="col-6 offset-4" >
             <ul className="main-menu">
                 <li>
                     <NavLink to="/" activeClassName="active" exact>
