@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import Form from './Form';
 import List from './List';
 import './styles.scss'
 
@@ -11,7 +12,7 @@ const Products = () => {
                     <List />
                 </Route>
                 <Route path="/admin/products/create">
-                    <h1>Criar novo produto</h1>
+                    <Form />
                 </Route>
                 <Route path="/admin/products/:productId">
                     <h1>Editar produto</h1>
