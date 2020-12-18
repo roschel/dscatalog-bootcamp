@@ -1,15 +1,12 @@
 package com.roschel.dscatalog.services;
 
-import com.roschel.dscatalog.dto.CategoryDTO;
 import com.roschel.dscatalog.dto.RoleDTO;
 import com.roschel.dscatalog.dto.UserDTO;
 import com.roschel.dscatalog.dto.UserInsertDTO;
-import com.roschel.dscatalog.entities.Category;
 import com.roschel.dscatalog.entities.Role;
 import com.roschel.dscatalog.entities.User;
-import com.roschel.dscatalog.repository.CategoryRepository;
-import com.roschel.dscatalog.repository.RoleRepository;
-import com.roschel.dscatalog.repository.UserRepository;
+import com.roschel.dscatalog.repositories.RoleRepository;
+import com.roschel.dscatalog.repositories.UserRepository;
 import com.roschel.dscatalog.services.exceptions.DatabaseException;
 import com.roschel.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

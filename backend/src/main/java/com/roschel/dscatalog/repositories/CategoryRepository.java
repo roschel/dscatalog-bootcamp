@@ -1,4 +1,4 @@
-package com.roschel.dscatalog.repository;
+package com.roschel.dscatalog.repositories;
 
 import com.roschel.dscatalog.entities.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
