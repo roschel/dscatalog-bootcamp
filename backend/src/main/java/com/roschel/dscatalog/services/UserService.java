@@ -3,6 +3,7 @@ package com.roschel.dscatalog.services;
 import com.roschel.dscatalog.dto.RoleDTO;
 import com.roschel.dscatalog.dto.UserDTO;
 import com.roschel.dscatalog.dto.UserInsertDTO;
+import com.roschel.dscatalog.dto.UserUpdateDTO;
 import com.roschel.dscatalog.entities.Role;
 import com.roschel.dscatalog.entities.User;
 import com.roschel.dscatalog.repositories.RoleRepository;
@@ -58,7 +59,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO update(Long id, UserDTO dto) {
+    public UserDTO update(Long id, UserUpdateDTO dto) {
         // getOne não acessa o banco, mas instancia um objeto provisório.
         // Só vamos acessar o banco ao salvar o objeto provisório atualizado.
         try {
