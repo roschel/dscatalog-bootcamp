@@ -2,6 +2,7 @@ package com.roschel.dscatalog.services;
 
 import com.roschel.dscatalog.dto.CategoryDTO;
 import com.roschel.dscatalog.dto.ProductDTO;
+import com.roschel.dscatalog.dto.UriDTO;
 import com.roschel.dscatalog.entities.Category;
 import com.roschel.dscatalog.entities.Product;
 import com.roschel.dscatalog.repositories.CategoryRepository;
@@ -15,8 +16,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +32,9 @@ public class ProductService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private S3Service s3Service;
 
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAllPaged(Long categoryId, String name, PageRequest pageRequest) {
@@ -92,5 +98,10 @@ public class ProductService {
             Category category = categoryRepository.getOne(catDto.getId());
             entity.getCategories().add(category);
         }
+    }
+
+    public UriDTO uploadFile(MultipartFile file) {
+        URL url = s3Service.uploadFile(file);
+        return new UriDTO(url.toString());
     }
 }
