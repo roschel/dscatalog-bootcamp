@@ -50,16 +50,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
     }
 
+    // nesse objeto que definimos com vai ser nossa autenticação e quais serão os dados do client
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient(clientId)
-                .secret(passwordEncoder.encode(clientSecret))
-                .scopes("read", "write")
+                .secret(passwordEncoder.encode(clientSecret)) // senha da aplicação e não do usuário
+                .scopes("read", "write") // acesso será de escrita e leitura
                 .authorizedGrantTypes("password")
                 .accessTokenValiditySeconds(jwtDuration);
     }
 
+    // aqui vamos autorizar e qual vai ser o formato do token
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 

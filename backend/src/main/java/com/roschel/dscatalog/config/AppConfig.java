@@ -18,9 +18,13 @@ public class AppConfig {
         return new BCryptPasswordEncoder();
     }
 
+    // Os dois Beans abaixo são objetos capazes de acessar um token JWT
+    // Ou seja, serão capazes de ler o token, decodificar, criar um token decodificado...
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter tokenConverter = new JwtAccessTokenConverter();
+
+        // Registrando nossa assinatura (secret)
         tokenConverter.setSigningKey(jwtSecret);
         return tokenConverter;
     }

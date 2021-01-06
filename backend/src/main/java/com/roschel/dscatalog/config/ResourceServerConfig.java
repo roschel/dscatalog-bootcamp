@@ -35,6 +35,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+        // Agora o resource server vai ser capaz de decodificar o token e
+        // analisar se o token está valido com o secret, se está expirado ou não.
         resources.tokenStore(tokenStore);
     }
 

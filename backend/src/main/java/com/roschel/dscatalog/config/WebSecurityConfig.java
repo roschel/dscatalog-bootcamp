@@ -23,11 +23,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // autorização vai usar o passwordEnconder, que é o bcrypt e o
+        // userDetailsService para fazer a busca pelo e-mail do usuário
+
+        // Assim, o Spring Security, na hora de fazer a autenticação já saberá
+        // como buscar o usuário por e-mail (através do service)
+        // e como analisar a senha criptografada
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
+        // actuator = biblioteca do spring cloud ouath usa pra passar nas requisições
         web.ignoring().antMatchers("/actuator/**");
 
         web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
