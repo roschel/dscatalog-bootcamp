@@ -1,5 +1,6 @@
 package com.roschel.dscatalog.tests.services;
 
+import com.roschel.dscatalog.dto.ProductDTO;
 import com.roschel.dscatalog.entities.Product;
 import com.roschel.dscatalog.repositories.ProductRepository;
 import com.roschel.dscatalog.services.ProductService;
@@ -57,6 +58,14 @@ public class ProductServiceTests {
         Mockito.doNothing().when(repository).deleteById(existingId);
         Mockito.doThrow(EmptyResultDataAccessException.class).when(repository).deleteById(nonExistingId);
         Mockito.doThrow(DataIntegrityViolationException.class).when(repository).deleteById(dependentId);
+    }
+
+    @Test
+    public void findByIdShouldReturnProductWhenIdExists() {
+        ProductDTO result = service.findById(existingId);
+
+        Mockito.verify(repository, Mockito.times(1)).findById(existingId);
+        Assertions.assertEquals(existingId,result.getId());
     }
 
     @Test
