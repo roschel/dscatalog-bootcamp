@@ -6,6 +6,7 @@ jdk:
 os:
   - linux
   
-matrix:
-    include:
-        - env: TARGET=backend
+on:
+  push:
+    paths:
+      - 'backend/**'
