@@ -1,0 +1,11 @@
+language: java
+
+jdk:
+  - openjdk11
+  
+os:
+  - linux
+  
+matrix:
+    include:
+        - env: TARGET=backend
