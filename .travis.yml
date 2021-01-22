@@ -1,7 +1,9 @@
 language: java
 
 jdk:
-  - openjdk11
+  - openjdk8
+
+script: "mvn cobertura:cobertura"
 
 os:
   - linux
