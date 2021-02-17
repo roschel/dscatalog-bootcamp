@@ -1,5 +1,6 @@
 package com.roschel.dscatalog.tests.web;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -56,6 +57,39 @@ public class ProductResourceTests {
 
     @Value("${security.oauth2.client.client-secret}")
     private String clientSecret;
+
+    private Long existingId;
+    private Long nonExistingId;
+    private ProductDTO newProductDTO;
+    private ProductDTO existingProductDTO;
+
+
+    @BeforeEach
+    void setUp() throws Exception {
+        existingId = 1L;
+        nonExistingId = 2L;
+
+        newProductDTO = ProductFactory.createproductDTO(null);
+        existingProductDTO = ProductFactory.createproductDTO(existingId);
+
+        when(service.findById(existingId)).thenReturn(existingProductDTO);
+        when(service.findById(nonExistingId)).thenThrow(ResourceNotFoundException.class);
+
+    }
+
+    @Test
+    public void findByIdShouldReturnProductWhenIdExists() throws Exception {
+        mockMvc.perform(get("/products/{id}", existingId)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void findByIdShouldNotFoundWhenIdDoesNotExist() throws Exception{
+        mockMvc.perform(get("/products/{id}", nonExistingId)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
 
     private String obtainAccessToken(String username, String password) throws Exception {
 
