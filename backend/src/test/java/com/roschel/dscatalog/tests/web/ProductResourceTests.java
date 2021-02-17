@@ -22,6 +22,7 @@ import java.util.List;
 import com.roschel.dscatalog.services.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.json.JacksonJsonParser;
@@ -60,6 +61,7 @@ public class ProductResourceTests {
 
     private Long existingId;
     private Long nonExistingId;
+    private Long dependentId;
     private ProductDTO newProductDTO;
     private ProductDTO existingProductDTO;
     private PageImpl<ProductDTO> page;
@@ -68,6 +70,7 @@ public class ProductResourceTests {
     void setUp() throws Exception {
         existingId = 1L;
         nonExistingId = 2L;
+        dependentId = 3L;
 
         newProductDTO = ProductFactory.createproductDTO(null);
         existingProductDTO = ProductFactory.createproductDTO(existingId);
@@ -78,7 +81,16 @@ public class ProductResourceTests {
         when(service.findById(existingId)).thenReturn(existingProductDTO);
         when(service.findById(nonExistingId)).thenThrow(ResourceNotFoundException.class);
 
-        when(service.findAllPaged(any(),anyString(),any())).thenReturn(page);
+        when(service.findAllPaged(any(), anyString(), any())).thenReturn(page);
+
+        when(service.insert(any())).thenReturn(existingProductDTO);
+
+        when(service.update(ArgumentMatchers.eq(existingId), any())).thenReturn(existingProductDTO);
+        when(service.update(eq(nonExistingId), any())).thenThrow(ResourceNotFoundException.class);
+
+        doNothing().when(service).delete(existingId);
+        doThrow(ResourceNotFoundException.class).when(service).delete(nonExistingId);
+        doThrow(DatabaseException.class).when(service).delete(dependentId);
     }
 
     @Test
