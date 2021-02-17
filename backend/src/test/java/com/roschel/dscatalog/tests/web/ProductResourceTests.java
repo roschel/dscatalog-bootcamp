@@ -50,6 +50,9 @@ public class ProductResourceTests {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @MockBean
     private ProductService service;
 
@@ -65,9 +68,14 @@ public class ProductResourceTests {
     private ProductDTO newProductDTO;
     private ProductDTO existingProductDTO;
     private PageImpl<ProductDTO> page;
+    private String operatorUserName;
+    private String operatorPassword;
 
     @BeforeEach
     void setUp() throws Exception {
+        operatorUserName = "alex@gmail.com";
+        operatorPassword = "123456";
+
         existingId = 1L;
         nonExistingId = 2L;
         dependentId = 3L;
@@ -91,6 +99,47 @@ public class ProductResourceTests {
         doNothing().when(service).delete(existingId);
         doThrow(ResourceNotFoundException.class).when(service).delete(nonExistingId);
         doThrow(DatabaseException.class).when(service).delete(dependentId);
+    }
+
+    @Test
+    public void updateShouldReturnProductWhenIdExists() throws Exception {
+
+        //Para realizar o teste é preciso estar logado
+        String accessToken = obtainAccessToken(operatorUserName, operatorPassword);
+
+        //atualizando o objeto java newProductDTO para Json para realizar request
+        String jsonBody = objectMapper.writeValueAsString(newProductDTO);
+
+        String expectedName = newProductDTO.getName();
+        Double expectedPrice = newProductDTO.getPrice();
+
+        mockMvc.perform(put("/products/{id}", existingId)
+                .header("Authorization", "Bearer "+accessToken)
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.id").value(existingId))
+                .andExpect(jsonPath("$.name").value(expectedName))
+                .andExpect(jsonPath("$.price").value(expectedPrice));
+    }
+
+    @Test
+    public void updateShouldReturnNotFoundWhenIdDoesNotExist() throws Exception {
+
+        //Para realizar o teste é preciso estar logado
+        String accessToken = obtainAccessToken(operatorUserName, operatorPassword);
+
+        //atualizando o objeto java newProductDTO para Json para realizar request
+        String jsonBody = objectMapper.writeValueAsString(newProductDTO);
+
+        mockMvc.perform(put("/products/{id}", nonExistingId)
+                .header("Authorization", "Bearer "+accessToken)
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test
