@@ -85,14 +85,17 @@ public class ProductResourceTests {
     public void findAllShouldReturnPage() throws Exception {
         mockMvc.perform(get("/products")
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content").exists());
     }
 
     @Test
     public void findByIdShouldReturnProductWhenIdExists() throws Exception {
         mockMvc.perform(get("/products/{id}", existingId)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.id").value(existingId));
     }
 
     @Test
