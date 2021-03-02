@@ -1,1 +1,1 @@
-[![Build Status](https://travis-ci.org/roschel/dscatalog-bootcamp.svg?branch=main)](https://travis-ci.org/roschel/dscatalog-bootcamp)
+[![Build Status](https://travis-ci.com/roschel/dscatalog-bootcamp.svg?branch=main)](https://travis-ci.com/roschel/dscatalog-bootcamp)
